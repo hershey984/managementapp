@@ -1,13 +1,14 @@
+import 'package:app/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:app/home_page.dart';
-import 'package:app/login_page.dart';
 import 'package:app/warehouse_page.dart';
-import 'package:app/add_proj.dart';
+import 'package:app/login_page.dart'; // Make sure this is the correct import
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize Firebase with the configuration
   await Firebase.initializeApp(
     options: FirebaseOptions(
       apiKey: "AIzaSyBlZavRDZrz2SkguFdQD_Ut5ALe5ksbTMQ",
@@ -32,10 +33,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int currentIndex = 0;
 
-  List<Widget> widgetList =  [
+  List<Widget> widgetList = [
     HomePage(),
     WarehousePage(),
-    RegisterPage(),
+    RegisterPage(),  // Ensure this is your registration/login page widget
   ];
 
   @override
@@ -43,10 +44,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-       // appBar: AppBar(
-       //   title: Text('App Bar'),
-       // ),
-        body: widgetList[currentIndex], 
+        // App bar can be added if needed
+        body: widgetList[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
           selectedItemColor: Colors.blue,
@@ -65,9 +64,6 @@ class _MyAppState extends State<MyApp> {
             setState(() {
               currentIndex = index;
             });
-            print("Tapped on index: $index");
-            print("HELLO");
-            print("hello world");
           },
         ),
       ),

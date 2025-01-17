@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -16,30 +17,39 @@ class _NewProjectPageState extends State<NewProjectPage> {
   final TextEditingController _endDateController = TextEditingController();
   String _status = 'upcoming'; 
 
-  
   Future<void> _addProject() async {
-  try {
-  // Add project data to Firestore
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  await firestore.collection('users')
-      .doc('userId')  
-      .collection('projects')
-      .add({
-        'projectName': _projectNameController.text,
-        'startDate': _startDateController.text,
-        'endDate': _endDateController.text,
-        'status': _status,
-      });
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null || userId.isEmpty) {
+      print('Error: User ID is null or empty.');
+      return;
+    }
 
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Project added successfully!')));
-  Navigator.pop(context);
-} catch (e) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
-  print("Error adding project: $e");
-}
+    if (_projectNameController.text.isEmpty ||
+        _startDateController.text.isEmpty ||
+        _endDateController.text.isEmpty) {
+      print('Error: Project fields cannot be empty.');
+      return;
+    }
 
-}
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('projects')
+          .add({
+            'projectName': _projectNameController.text,
+            'startDate': _startDateController.text,
+            'endDate': _endDateController.text,
+            'status': _status,
+          });
 
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Project added successfully!')));
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      print("Error adding project: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
