@@ -1,10 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:app/home_page.dart';
 import 'package:app/login_page.dart';
 import 'package:app/warehouse_page.dart';
-import 'package:flutter/material.dart';
+import 'package:app/add_proj.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: "AIzaSyBlZavRDZrz2SkguFdQD_Ut5ALe5ksbTMQ",
+      authDomain: "managementapp-9502a.firebaseapp.com",
+      projectId: "managementapp-9502a",
+      storageBucket: "managementapp-9502a.firebasestorage.app",
+      messagingSenderId: "124026290646",
+      appId: "1:124026290646:web:b8f69a5af41f0647e72477",
+    ),
+  );
+
   runApp(MyApp());
 }
 
@@ -21,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   List<Widget> widgetList =  [
     HomePage(),
     WarehousePage(),
-    LoginPage(),
+    RegisterPage(),
   ];
 
   @override

@@ -1,3 +1,4 @@
+import 'package:app/add_proj.dart';
 import 'package:flutter/material.dart';
 
 
@@ -48,6 +49,17 @@ Widget build(BuildContext context) {
             ],
           ),
         ),
+        ElevatedButton(
+            onPressed: () {
+              // Navigate to the form where users can add a new project
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NewProjectPage()),
+              );
+            },
+            child: Text('Add New Project'),
+           
+          ),
 
       ],
     ),
