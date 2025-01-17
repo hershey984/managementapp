@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
 
   List<Widget> widgetList = [
     HomePage(),
-    WarehousePage(),
+    WarehouseScreen(),
     RegisterPage(),  // Ensure this is your registration/login page widget
   ];
 

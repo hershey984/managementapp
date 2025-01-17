@@ -5,7 +5,6 @@ import 'package:app/projreq.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -23,80 +22,150 @@ class HomePage extends StatelessWidget {
         title: Text('Home Page'),
         backgroundColor: Color.fromRGBO(61, 51, 13, 1),
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 20),
-          Container(
-            color: Color.fromARGB(141, 250, 240, 230),
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UpcomingProjectsScreen(userId: user.uid),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Welcome section
+            Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(141, 250, 240, 230),
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(user.photoURL ?? 'https://www.example.com/default-avatar.png'),
+                    backgroundColor: Colors.grey,
+                  ),
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        user.displayName ?? 'No Name',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                    );
-                  },
-                  child: Text('Upcoming Projects'),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Color.fromARGB(141, 250, 240, 230),
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    // Navigate to the Project Request Page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ProjectRequestPage()),
-                    );
-                  },
-                  child: Text('Request Resources for Project'),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 30),
-          Container(
-            color: Color.fromARGB(141, 250, 240, 230),
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OngoingProjectsScreen(userId: user.uid),
+                      Text(
+                        user.email ?? 'No Email',
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
                       ),
-                    );
-                  },
-                  child: Text('Ongoing Projects'),
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 30),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NewProjectPage()),
-              );
-            },
-            child: Text('Add New Project'),
-          ),
-        ],
+            SizedBox(height: 20),
+            Container(
+              padding: EdgeInsets.all(15),
+              color: Color.fromARGB(141, 250, 240, 230),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome, ${user.displayName ?? 'User'}!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromRGBO(61, 51, 13, 1),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+
+            // Navigation cards
+            Card(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text('Upcoming Projects'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpcomingProjectsScreen(userId: user.uid),
+                    ),
+                  );
+                },
+                tileColor: Color.fromARGB(141, 250, 240, 230),
+                leading: Icon(Icons.schedule, color: Color.fromRGBO(61, 51, 13, 1)),
+              ),
+            ),
+            Card(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text('Request Resources for Project'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProjectRequestPage()),
+                  );
+                },
+                tileColor: Color.fromARGB(141, 250, 240, 230),
+                leading: Icon(Icons.add, color: Color.fromRGBO(61, 51, 13, 1)),
+              ),
+            ),
+            Card(
+              margin: EdgeInsets.symmetric(vertical: 8),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListTile(
+                title: Text('Ongoing Projects'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OngoingProjectsScreen(userId: user.uid),
+                    ),
+                  );
+                },
+                tileColor: Color.fromARGB(141, 250, 240, 230),
+                leading: Icon(Icons.work, color: Color.fromRGBO(61, 51, 13, 1)),
+              ),
+            ),
+            SizedBox(height: 30),
+
+            // Add new project button
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewProjectPage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15), backgroundColor: Color.fromRGBO(61, 51, 13, 1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: Text(
+                'Add New Project',
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
