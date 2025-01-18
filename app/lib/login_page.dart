@@ -1,13 +1,17 @@
+//imported firestore auth for registration auth and cloud firestore for database operations
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+//stateful widget to handle all the state changes in the page
 class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
+
 class _RegisterPageState extends State<RegisterPage> {
+  //input feilds for registration
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
@@ -17,6 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void _registerUser() async {
     try {
+      //create new user
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
@@ -25,17 +30,20 @@ class _RegisterPageState extends State<RegisterPage> {
       User? user = userCredential.user;
 
       if (user != null) {
+        //additional info of user
         await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
           'username': usernameController.text,
           'contact': contactController.text,
           'email': user.email, 
         });
 
+        //manage snackbar in scaffold
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('User registered successfully'),
         ));
       }
     } catch (e) {
+      //if any error in registration
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Error registering user: $e'),
       ));
@@ -43,6 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
+  //to display ui
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

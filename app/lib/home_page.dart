@@ -10,9 +10,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Getting the current user from Firebase Auth
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return Scaffold(
+        // user is not reg this show a prompt to sign in
         body: Center(child: Text('Please sign in')),
       );
     }
@@ -26,7 +28,6 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Welcome section
             Container(
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 30,
-                    backgroundImage: NetworkImage(user.photoURL ?? 'https://www.example.com/default-avatar.png'),
+                    
                     backgroundColor: Colors.grey,
                   ),
                   SizedBox(width: 15),
@@ -52,7 +53,7 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        user.displayName ?? 'No Name',
+                        'data',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       Text(
@@ -72,7 +73,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Welcome, ${user.displayName ?? 'User'}!',
+                    'Welcome User',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
