@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:app/home_page.dart';
 import 'package:app/warehouse_page.dart';
-import 'package:app/login_page.dart'; // Make sure this is the correct import
+import 'package:app/login_page.dart'; 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
   List<Widget> widgetList = [
     HomePage(),
     WarehouseScreen(),
-    RegisterPage(),  // Ensure this is your registration/login page widget
+    RegisterPage(), 
   ];
 
   @override
@@ -44,7 +44,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        // App bar can be added if needed
         body: widgetList[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: currentIndex,
