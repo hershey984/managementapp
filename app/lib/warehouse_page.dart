@@ -32,27 +32,27 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
     });
   }
 
-  // Function to add item to the warehouse
+  // Function to add item
   void addItemToWarehouse(WarehouseItem item) {
     if (currentStock + item.quantity <= warehouseSize) {
-      // Check if the item already exists in the warehouse
+      // Check if already exists
       int index = warehouseItems.indexWhere((warehouseItem) => warehouseItem.name == item.name);
 
       if (index != -1) {
-        // If item already exists, increase its quantity
+        // If exists increase its quantity
         setState(() {
           warehouseItems[index].quantity += item.quantity;
           currentStock += item.quantity;
         });
       } else {
-        // If item doesn't exist, add it to the warehouse
+        // add it to the warehouse
         setState(() {
           warehouseItems.add(WarehouseItem(name: item.name, quantity: item.quantity));
           currentStock += item.quantity;
         });
       }
     } else {
-      // Show alert if there's not enough space in the warehouse
+//alert
       showDialog(
         context: context,
         builder: (context) {
@@ -73,16 +73,16 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
     }
   }
 
-  // Function to remove an item from the warehouse
+
   void removeItemFromWarehouse(WarehouseItem item) {
     setState(() {
       warehouseItems.remove(item);
       currentStock -= item.quantity;
-      availableItems.add(item); // Add item back to available list
+      availableItems.add(item);
     });
   }
 
-  // Function to show the warehouse size selection dialog
+ 
   void showWarehouseSizeDialog() {
     showDialog(
       context: context,
@@ -133,7 +133,7 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Warehouse Summary
+       
             Container(
               padding: EdgeInsets.all(15),
               color: Color.fromARGB(141, 250, 240, 230),
@@ -157,7 +157,6 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
             ),
             SizedBox(height: 20),
 
-            // List of available items
             Text(
               'Available Items to Add:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -187,7 +186,7 @@ class _WarehouseScreenState extends State<WarehouseScreen> {
               ),
             ),
 
-            // Finalized items in the warehouse
+            
             SizedBox(height: 20),
             Text(
               'Items in Warehouse:',

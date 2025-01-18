@@ -8,14 +8,14 @@ class ProjectRequestPage extends StatefulWidget {
 
 class _ProjectRequestPageState extends State<ProjectRequestPage> {
   final _formKey = GlobalKey<FormState>();
-  String? _projectType = 'upcoming'; // Default to 'upcoming'
-  String? _selectedProject; // To store selected project name
+  String? _projectType = 'upcoming'; //default value for this
+  String? _selectedProject; 
   final TextEditingController _resourceController = TextEditingController();
 
   // List to store fetched projects
   List<String> _projects = [];
 
-  String userId = 'KHU3gYnBZtgfSLDSeRJ6UhGFHAt1';  // Replace with the actual userId (this could be dynamic)
+  String userId = 'KHU3gYnBZtgfSLDSeRJ6UhGFHAt1';  
 
   @override
   void initState() {
@@ -23,14 +23,14 @@ class _ProjectRequestPageState extends State<ProjectRequestPage> {
     _fetchProjects();
   }
 
-  // Fetch projects based on status (upcoming or ongoing)
+  
   Future<void> _fetchProjects() async {
     try {
       final QuerySnapshot snapshot = await FirebaseFirestore.instance
           .collection('users')  // Collection of users
           .doc(userId)           // User's document ID
           .collection('projects') // Projects subcollection
-          .where('status', isEqualTo: _projectType)  // Filter by status (upcoming/ongoing)
+          .where('status', isEqualTo: _projectType)  
           .get();
 
       setState(() {
@@ -41,10 +41,10 @@ class _ProjectRequestPageState extends State<ProjectRequestPage> {
     }
   }
 
-  // Handle form submission
+  // Handlingform submission
   void _submitRequest() {
     if (_formKey.currentState!.validate()) {
-      // Process the request (e.g., save to Firestore or show a success message)
+     
       print('Project Type: $_projectType');
       print('Selected Project: $_selectedProject');
       print('Requested Resources: ${_resourceController.text}');
@@ -67,14 +67,13 @@ class _ProjectRequestPageState extends State<ProjectRequestPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Dropdown to select project type (Upcoming/Ongoing)
               DropdownButtonFormField<String>(
                 value: _projectType,
                 decoration: InputDecoration(labelText: 'Project Type'),
                 onChanged: (value) {
                   setState(() {
                     _projectType = value;
-                    _fetchProjects(); // Fetch projects when the type changes
+                    _fetchProjects(); 
                   });
                 },
                 items: [
@@ -84,7 +83,7 @@ class _ProjectRequestPageState extends State<ProjectRequestPage> {
               ),
               SizedBox(height: 20),
 
-              // Dropdown to select a specific project
+             
               DropdownButtonFormField<String>(
                 value: _selectedProject,
                 decoration: InputDecoration(labelText: 'Select Project'),
@@ -101,7 +100,7 @@ class _ProjectRequestPageState extends State<ProjectRequestPage> {
               ),
               SizedBox(height: 20),
 
-              // Text field to request resources
+            
               TextFormField(
                 controller: _resourceController,
                 decoration: InputDecoration(labelText: 'Resources Needed'),
@@ -114,7 +113,7 @@ class _ProjectRequestPageState extends State<ProjectRequestPage> {
               ),
               SizedBox(height: 20),
 
-              // Submit button
+            
               ElevatedButton(
                 onPressed: _submitRequest,
                 child: Text('Submit Request'),
